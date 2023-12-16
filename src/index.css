@@ -1,0 +1,145 @@
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+ 
+}
+.signup-container,
+.login-container {
+  color: aliceblue;
+background-color:#3533CD ;
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  background-color:#3533CD;
+  
+}
+
+
+.error-message {
+  color: red;
+  background-color:#3533CD;
+}
+.label{
+  background-color:#3533CD;
+}
+.form-group {
+  margin-bottom: 15px;
+  background-color:#3533CD;
+}
+.form{
+  background-color:#3533CD;
+}
+.signup-link,
+.login-link {
+  background-color:#3533CD;
+  color: aliceblue;
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Add more styles as needed */
+.button{
+  margin-top: 20px;
+  margin-left: 140px;
+}
+.logo-container {
+  width: 50px; /* Adjust the size as needed */
+  height: 50px;
+  overflow: hidden;
+  border-radius: 50%; /* Make it circular */
+}
+
+.logo {
+  width: 60px; /* Make the image fill the container */
+  height: auto;
+  border-radius: 50%; /* Ensure the image itself is also circular */
+}
+/* Add your styling here */
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.links {
+  display: flex;
+  gap: 10px;
+}
+
+.profile-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+/* Add this CSS in your existing stylesheet or create a new one */
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color:#3533CD;
+  color: white;
+}
+
+.logo {
+  width: 50px; /* Adjust the size as needed */
+  height: auto;
+  border-radius: 50%; /* Ensure the image itself is also circular */
+}
+
+.links {
+  display: flex;
+  gap: 20px;
+}
+
+.links a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.links a:hover {
+  background-color: #000; /* Adjust the color on hover */
+  border-radius: 20px;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049; /* Adjust the color on hover */
+}
+.iconProfile{
+  margin-right: 20px;
+}
+.iconProfile:hover{
+  cursor: pointer;
+}
