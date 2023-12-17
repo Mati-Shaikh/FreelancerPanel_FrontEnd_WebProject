@@ -1,37 +1,174 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import {faCreditCard, faUser,faFileAlt, faBell, faCodeBranch, faBusinessTime, faStar } from '@fortawesome/free-solid-svg-icons';
 import logo from './Delta.png';
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { faPowerOff, faUserPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
 
-const Navbar = ({ toggleProfilePopup, handleNavLinkClick }) => {
-  const handleLinkClick = (component) => {
-    handleNavLinkClick(component);
+const Navbar = ({ handleNavLinkClick, handleModalToggle }) => {
+  const navigate = useNavigate();
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [formData, setFormData] = useState({
+    FullName: '',
+    Email: '',
+    // Add more fields as needed
+  });
+
+  const handleCloseEditModal = () => {
+    setShowEditModal(false);
+    setFormData({
+      FullName: '',
+      Email: '',
+      // Initialize other fields
+    });
   };
+
+  const handleEditProfile = async () => {
+    try {
+      // Perform API call to update user profile
+      const response = await fetch('http://localhost:3000/api/Freelancer/updateFreelancer', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          token: localStorage.getItem('token'),
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert('Your profile has been updated.');
+        setShowEditModal(false);
+      } else {
+        const data = await response.json();
+        alert(`Failed to update profile: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Error during profile update:', error);
+      alert('Error during profile update. Please try again later.');
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      // Perform API call to delete the user
+      const response = await fetch('http://localhost:3000/api/Freelancer/DeleteFreelancer', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          token: localStorage.getItem('token'),
+        },
+      });
+
+      if (response.ok) {
+        alert('Your account has been deleted.');
+        localStorage.removeItem('token'); // Remove token from localStorage
+        navigate('/login'); // Navigate to the login page
+      } else {
+        const data = await response.json();
+        alert(`Failed to delete account: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Error during account deletion:', error);
+      alert('Error during account deletion. Please try again later.');
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Remove token from localStorage
+    navigate('/login'); // Navigate to the login page
+  };
+
+  // Other functions...
 
   return (
     <nav>
       <img src={logo} alt="Logo" className="logo" />
 
       <div className="links">
-        <a href="#" onClick={() => handleLinkClick('Notifications')}>
-          Notifications
+        <a href="#" onClick={() => handleNavLinkClick('Notifications')}>
+          <FontAwesomeIcon icon={faBell} /> Notifications
         </a>
-        <a href="#" onClick={() => handleLinkClick('NewProposals')}>
-          New Proposals
+        <a href="#" onClick={() => handleNavLinkClick('NewProposals')}>
+        <FontAwesomeIcon icon={faFileAlt} /> New Proposals
         </a>
-        <a href="#" onClick={() => handleLinkClick('History')}>
-          History
+        <a href="#" onClick={() => handleNavLinkClick('History')}>
+        <FontAwesomeIcon icon={faCreditCard} /> PaymentHistory
         </a>
-        <a href="#" onClick={() => handleLinkClick('PresentProjects')}>
-          Present Projects
+        <a href="#" onClick={() => handleNavLinkClick('PresentProjects')}>
+          <FontAwesomeIcon icon={faBusinessTime} /> Present Projects
         </a>
-        <a href="#" onClick={() => handleLinkClick('Reviews')}>
-          Reviews
+        <a href="#" onClick={() => handleNavLinkClick('Reviews')}>
+          <FontAwesomeIcon icon={faStar} /> Reviews
         </a>
       </div>
-      <div className="user-icon" onClick={toggleProfilePopup}>
-        <FontAwesomeIcon icon={faUser} className="iconProfile" />
-      </div>
+
+      {/* Using Bootstrap SplitButton */}
+      <Dropdown as={ButtonGroup}>
+        <Button variant="primary" style={{ backgroundColor: '#3533CD' }}>
+          <FontAwesomeIcon icon={faUser} className="iconProfile" />
+        </Button>
+
+        <Dropdown.Toggle split variant="primary" id="dropdown-split-basic" />
+
+        <Dropdown.Menu>
+          <Dropdown.Item onClick={handleModalToggle}>
+            <FontAwesomeIcon icon={faUser} /> View
+          </Dropdown.Item>
+          <Dropdown.Item onClick={() => setShowEditModal(true)}>
+            <FontAwesomeIcon icon={faUserPen} /> Edit
+          </Dropdown.Item>
+          <Dropdown.Item onClick={handleDeleteAccount}>
+            <FontAwesomeIcon icon={faTrash} /> Delete
+          </Dropdown.Item>
+          <Dropdown.Item onClick={handleLogout}>
+            <FontAwesomeIcon icon={faPowerOff} /> Logout
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+
+      {/* Edit Profile Modal */}
+      <Modal show={showEditModal} onHide={handleCloseEditModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Profile</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formFullName">
+              <Form.Label>Full Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter your full name"
+                value={formData.FullName}
+                onChange={(e) => setFormData({ ...formData, FullName: e.target.value })}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter your email"
+                value={formData.Email}
+                onChange={(e) => setFormData({ ...formData, Email: e.target.value })}
+              />
+            </Form.Group>
+            {/* Add more form groups for other fields if needed */}
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseEditModal}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleEditProfile}>
+            Update
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </nav>
   );
 };
