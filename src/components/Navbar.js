@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faCreditCard, faUser,faFileAlt, faBell, faCodeBranch, faBusinessTime, faStar } from '@fortawesome/free-solid-svg-icons';
+import {faCreditCard,faHouse, faUser,faFileAlt, faBell, faCodeBranch, faBusinessTime, faStar } from '@fortawesome/free-solid-svg-icons';
 import logo from './Delta.png';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -88,22 +88,24 @@ const Navbar = ({ handleNavLinkClick, handleModalToggle }) => {
   return (
     <nav>
       <img src={logo} alt="Logo" className="logo" />
-
       <div className="links">
+      <a href="#" onClick={() => handleNavLinkClick('Home')}>
+          <FontAwesomeIcon icon={faHouse} className='logos'/> Home
+        </a>
         <a href="#" onClick={() => handleNavLinkClick('Notifications')}>
-          <FontAwesomeIcon icon={faBell} /> Notifications
+          <FontAwesomeIcon icon={faBell} className='logos'/> Notifications
         </a>
         <a href="#" onClick={() => handleNavLinkClick('NewProposals')}>
-        <FontAwesomeIcon icon={faFileAlt} /> New Proposals
+        <FontAwesomeIcon icon={faFileAlt} className='logos'/> New Proposals
         </a>
         <a href="#" onClick={() => handleNavLinkClick('History')}>
-        <FontAwesomeIcon icon={faCreditCard} /> PaymentHistory
+        <FontAwesomeIcon icon={faCreditCard} className='logos'/> PaymentHistory
         </a>
         <a href="#" onClick={() => handleNavLinkClick('PresentProjects')}>
-          <FontAwesomeIcon icon={faBusinessTime} /> Present Projects
+          <FontAwesomeIcon icon={faBusinessTime} className='logos'/> Present Projects
         </a>
         <a href="#" onClick={() => handleNavLinkClick('Reviews')}>
-          <FontAwesomeIcon icon={faStar} /> Reviews
+          <FontAwesomeIcon icon={faStar} className='logos'/> Reviews
         </a>
       </div>
 
@@ -117,22 +119,22 @@ const Navbar = ({ handleNavLinkClick, handleModalToggle }) => {
 
         <Dropdown.Menu>
           <Dropdown.Item onClick={handleModalToggle}>
-            <FontAwesomeIcon icon={faUser} /> View
+            <FontAwesomeIcon icon={faUser} className='logos_1'/> View
           </Dropdown.Item>
           <Dropdown.Item onClick={() => setShowEditModal(true)}>
-            <FontAwesomeIcon icon={faUserPen} /> Edit
+            <FontAwesomeIcon icon={faUserPen} className='logos_1'/> Edit
           </Dropdown.Item>
           <Dropdown.Item onClick={handleDeleteAccount}>
-            <FontAwesomeIcon icon={faTrash} /> Delete
+            <FontAwesomeIcon icon={faTrash} className='logos_1' /> Delete
           </Dropdown.Item>
           <Dropdown.Item onClick={handleLogout}>
-            <FontAwesomeIcon icon={faPowerOff} /> Logout
+            <FontAwesomeIcon icon={faPowerOff} className='logos_1' /> Logout
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
 
       {/* Edit Profile Modal */}
-      <Modal show={showEditModal} onHide={handleCloseEditModal}>
+      <Modal show={showEditModal} onHide={handleCloseEditModal} className='update_modal'>
         <Modal.Header closeButton>
           <Modal.Title>Edit Profile</Modal.Title>
         </Modal.Header>

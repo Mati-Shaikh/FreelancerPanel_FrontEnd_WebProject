@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCreditCard,faMoneyBill } from '@fortawesome/free-solid-svg-icons';
+import { faCreditCard } from '@fortawesome/free-solid-svg-icons';
+import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
 
 const PaymentHistory = () => {
@@ -38,7 +39,7 @@ const PaymentHistory = () => {
 
   return (
     <div className="payment-history-container">
-      <h1>
+      <h1 className='history-heading'>
         <FontAwesomeIcon icon={faCreditCard} /> Payment History
       </h1>
 
@@ -47,16 +48,18 @@ const PaymentHistory = () => {
       {!loading && paymentHistory.length === 0 && <p className="text-muted">No payment history available.</p>}
 
       {!loading && paymentHistory.length > 0 && (
-        <ul className="list-group">
+        <div className='notify'>
           {paymentHistory.map((payment) => (
-            <li key={payment._id} className="list-group-item">
-              {payment.message}
-              <Badge pill variant="info" className="ml-2">
-                {new Date(payment.createdAt).toLocaleString()}
-              </Badge>
-            </li>
+            <Card key={payment._id} className="mb-3">
+              <Card.Body>
+                <Card.Text className="mb-0 text-white">{payment.message}</Card.Text>
+                <Badge pill variant="info" className="mt-2">
+                  {new Date(payment.createdAt).toLocaleString()}
+                </Badge>
+              </Card.Body>
+            </Card>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

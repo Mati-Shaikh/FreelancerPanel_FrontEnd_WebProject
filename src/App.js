@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import History from './components/History'
 
 const App = () => {
   const handleLoginSuccess = () => {
@@ -22,12 +23,15 @@ const App = () => {
       <Routes>
         <Route path="/signup" element={<SignUp onSignUpSuccess={handleSignUpSuccess} />} />
         <Route
-          path="/login"
+          path="/"
           element={<Login onLoginSuccess={handleLoginSuccess} />}
         />
         <Route
           path="/Dashboard"
           element={<Dashboard/>} />
+        <Route
+          path="/History"
+          element={<History/>} />
       </Routes>
     </Router>
   );

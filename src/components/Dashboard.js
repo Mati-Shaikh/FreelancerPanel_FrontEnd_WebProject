@@ -6,6 +6,7 @@ import NewProposals from './NewProposals'; // Import the component for New Propo
 import History from './History'; // Import the component for History
 import PresentProjects from './PresentProject'; // Import the component for Present Projects
 import Reviews from './Reviews'; // Import the component for Reviews
+import Home from './Home'; // Import the component for Reviews
 
 const Dashboard = () => {
   const [activeComponent, setActiveComponent] = useState(null);
@@ -25,6 +26,7 @@ const Dashboard = () => {
         toggleProfilePopup={toggleProfilePopup}
         handleNavLinkClick={handleNavLinkClick}
       />
+      {activeComponent === 'Home' && <Home />}
       {activeComponent === 'Notifications' && <Notifications />}
       {activeComponent === 'NewProposals' && <NewProposals />}
       {activeComponent === 'History' && <History />}

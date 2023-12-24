@@ -45,17 +45,20 @@ const Notifications = () => {
       {!loading && notifications.length === 0 && <p className="text-muted">No notifications available.</p>}
 
       {!loading && notifications.length > 0 && (
-        <div>
-          {notifications.map((notification) => (
-            <Card key={notification._id} className="mb-3">
-              <Card.Body>
-                <Card.Text className="mb-0">{notification.message}</Card.Text>
-                <Badge pill variant="info" className="mt-2">
-                  {new Date(notification.createdAt).toLocaleString()}
-                </Badge>
-              </Card.Body>
-            </Card>
-          ))}
+        <div className='notify'>
+{notifications.map((notification) => (
+  <div key={notification._id}>
+    <Card className="mb-3">
+      <Card.Body>
+        <Card.Text className="mb-0 text-white">{notification.message}</Card.Text>
+        <Badge pill variant="info" className="mt-2">
+          {new Date(notification.createdAt).toLocaleString()}
+        </Badge>
+      </Card.Body>
+    </Card>
+  </div>
+))}
+
         </div>
       )}
     </div>

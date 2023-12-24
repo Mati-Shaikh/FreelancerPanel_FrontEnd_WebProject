@@ -108,7 +108,7 @@ const SignUp = ({ onSignUpSuccess }) => {
           Sign Up
         </Button>
 
-        <Link to="/login" className="login-link">
+        <Link to="/" className="login-link">
           Already have an account? Log In
         </Link>
       </Form>
