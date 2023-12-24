@@ -38,6 +38,65 @@ const NewProposals = () => {
     fetchNewProposals();
   }, []);
 
+  const handleReject = async (id) => {
+    try {
+      console.log(id)
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:3000/api/Freelancer/ProjectReject/${id}`, {
+        method: 'POST', // Assuming you are using a PUT request for updating the project status
+        headers: {
+          token: token,
+        },
+      });
+      const data=response.json();
+      console.log(data);
+      if (response.ok) {
+        // Project approved successfully
+        alert('Project Rejected successfully');
+        
+        // Refresh the list of new proposals (you may want to consider updating state)
+        // For example, you can make another API call here or modify the state directly
+      } else {
+        const data = await response.json();
+        console.error('Failed to approve project:', data.message);
+        alert('Failed to Reject project');
+      }
+    } catch (error) {
+      console.error('Error during project approval:', error);
+      alert('Error during project reject');
+    }
+  };
+
+
+
+  const handleApproval = async (id) => {
+    try {
+      console.log(id)
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:3000/api/Freelancer/ProjectApproved/${id}`, {
+        method: 'POST', // Assuming you are using a PUT request for updating the project status
+        headers: {
+          token: token,
+        },
+      });
+      const data=response.json();
+      console.log(data);
+      if (response.ok) {
+        // Project approved successfully
+        alert('Project Approved successfully');
+        
+        // Refresh the list of new proposals (you may want to consider updating state)
+        // For example, you can make another API call here or modify the state directly
+      } else {
+        const data = await response.json();
+        console.error('Failed to approve project:', data.message);
+        alert('Failed to approve project');
+      }
+    } catch (error) {
+      console.error('Error during project approval:', error);
+      alert('Error during project approval');
+    }
+  };
   const handleShowModal = (project) => {
     setSelectedProject(project);
     setShowModal(true);
@@ -69,6 +128,8 @@ const NewProposals = () => {
                   <Badge pill variant="info">
                     {project.Status}
                   </Badge>
+                  <button className="btn btn-primary detail_button" onClick={()=> handleApproval(project._id)}>Accepted</button>
+<button className="btn btn-primary detail_button" onClick={()=> handleReject(project._id)}>Rejected</button>
                   <Button variant="primary" className='detail_button' onClick={() => handleShowModal(project)}>
                     View Details
                   </Button>
