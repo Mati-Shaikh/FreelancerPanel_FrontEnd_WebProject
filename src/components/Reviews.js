@@ -36,8 +36,10 @@ const Reviews = () => {
 
   return (
     <div className="reviews-container">
-      <h1 className="reviews-heading"><FontAwesomeIcon icon={faStar} className="star-icon" /> Reviews</h1>
-
+      
+      <div className="heading-container">
+        <div className="animated-heading"> <FontAwesomeIcon icon={faStar} className="star-icon" /> Reviews</div>
+      </div>
       {loading && <Spinner animation="border" role="status" className="text-muted">
         <span className="sr-only">Loading...</span>
       </Spinner>}

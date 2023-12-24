@@ -39,9 +39,10 @@ const PaymentHistory = () => {
 
   return (
     <div className="payment-history-container">
-      <h1 className='history-heading'>
-        <FontAwesomeIcon icon={faCreditCard} /> Payment History
-      </h1>
+      <div className="heading-container">
+        <div className="animated-heading"> <FontAwesomeIcon icon={faCreditCard} /> Payment History</div>
+      </div>
+      
 
       {loading && <p className="text-muted">Loading payment history...</p>}
 

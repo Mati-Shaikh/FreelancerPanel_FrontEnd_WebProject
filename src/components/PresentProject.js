@@ -50,9 +50,9 @@ const PresentProposals = () => {
 
   return (
     <div className="present-proposals-container">
-      <h1 className="present-proposals-heading">
-        <FontAwesomeIcon icon={faBusinessTime} /> Present Proposals
-      </h1>
+      <div className="heading-container">
+        <div className="animated-heading"> <FontAwesomeIcon icon={faBusinessTime} /> Present Proposals</div>
+      </div>
 
       {loading && <p className="text-muted">Loading present proposals...</p>}
 

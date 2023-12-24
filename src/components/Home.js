@@ -2,12 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Container, Card, Button, Modal, Carousel } from 'react-bootstrap';
 
 const SearchComponent = () => {
+    const [selectedSellerProject, setSelectedSellerProject] = useState(null);
+
   const [query, setQuery] = useState('');
   const [allProjects, setAllProjects] = useState([]);
+  const [sellerProjects, setSellerProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
-  const [carouselIndex, setCarouselIndex] = useState(0);
+  const [projectCarouselIndex, setProjectCarouselIndex] = useState(0);
+  const [sellerCarouselIndex, setSellerCarouselIndex] = useState(0);
 
   const handleSearch = async () => {
     try {
@@ -30,7 +34,8 @@ const SearchComponent = () => {
 
       const data = await response.json();
       setFilteredProjects(data.sellerProjects || data);
-      setCarouselIndex(0);
+      setProjectCarouselIndex(0);
+      setSellerCarouselIndex(0);
     } catch (error) {
       console.error('Error fetching search results:', error);
     }
@@ -56,10 +61,11 @@ const SearchComponent = () => {
       console.error('Error fetching all projects:', error);
     }
   };
+
   const fetchSellerProjects = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('localhost:3000/api/Freelancer/getsellerprojects', {
+      const response = await fetch('http://localhost:3000/api/Freelancer/getsellerprojects', {
         headers: {
           token: token,
         },
@@ -70,25 +76,24 @@ const SearchComponent = () => {
       }
 
       const data = await response.json();
-      setAllProjects(data);
-      setFilteredProjects(data);
+      setSellerProjects(data);
     } catch (error) {
-      console.error('Error fetching all projects:', error);
+      console.error('Error fetching seller projects:', error);
     }
   };
 
   useEffect(() => {
     fetchAllProjects();
-   
+    fetchSellerProjects();
   }, []);
 
-  useEffect(()=>{
-    fetchSellerProjects();
-  },[]);
-
-  const handleShowModal = (project, index) => {
+  const handleShowModal = (project, index, isSellerProject) => {
     setSelectedProject(project);
-    setCarouselIndex(index);
+    if (isSellerProject) {
+      setSellerCarouselIndex(index);
+    } else {
+      setProjectCarouselIndex(index);
+    }
     setShowModal(true);
   };
 
@@ -117,28 +122,53 @@ const SearchComponent = () => {
         Search
       </button>
 
-   
       <div className="heading-container">
         <div className="animated-heading">Projects</div>
       </div>
 
-   
       <div>
         {filteredProjects.length > 0 && (
           <Carousel
-            activeIndex={carouselIndex}
-            onSelect={(selectedIndex) => setCarouselIndex(selectedIndex)}
+            activeIndex={projectCarouselIndex}
+            onSelect={(selectedIndex) => setProjectCarouselIndex(selectedIndex)}
             style={{ maxWidth: '80%', margin: '0 auto' }}
           >
             {filteredProjects.map((project, index) => (
-              <Carousel.Item key={project._id} onClick={() => handleShowModal(project, index)}>
+              <Carousel.Item key={project._id} onClick={() => handleShowModal(project, index, false)}>
                 <div className="cardbody">
                   <Card className="mb-3 text-white text-center">
                     <Card.Body>
                       <Card.Title className="mb-2 text-white text-center">{project.Title}</Card.Title>
-                      {/* Center the Card.Text */}
                       <Card.Text className="mb-2 text-white text-center">{project.Description}</Card.Text>
-                      <Button variant="primary ">View Details</Button>
+                      <Button variant="primary">View Details</Button>
+                    </Card.Body>
+                  </Card>
+                </div>
+              </Carousel.Item>
+            ))}
+          </Carousel>
+        )}
+      </div>
+
+      <div className="heading-container">
+        <div className="animated-heading">Seller Projects</div>
+      </div>
+
+      <div>
+        {sellerProjects.length > 0 && (
+          <Carousel
+            activeIndex={sellerCarouselIndex}
+            onSelect={(selectedIndex) => setSellerCarouselIndex(selectedIndex)}
+            style={{ maxWidth: '80%', margin: '0 auto' }}
+          >
+            {sellerProjects.map((project, index) => (
+              <Carousel.Item key={project._id} onClick={() => handleShowModal(project, index, true)}>
+                <div className="cardbody">
+                  <Card className="mb-3 text-white text-center">
+                    <Card.Body>
+                      <Card.Title className="mb-2 text-white text-center">{project.Title}</Card.Title>
+                      <Card.Text className="mb-2 text-white text-center">{project.Description}</Card.Text>
+                      <Button variant="primary">View Details</Button>
                     </Card.Body>
                   </Card>
                 </div>
@@ -168,36 +198,9 @@ const SearchComponent = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <div className="heading-container">
-        <div className="animated-heading">Seller Products</div>
-      </div>
-{/*Seller Products Fetch*/ }
-      <div>
-        {filteredProjects.length > 0 && (
-          <Carousel
-            activeIndex={carouselIndex}
-            onSelect={(selectedIndex) => setCarouselIndex(selectedIndex)}
-            style={{ maxWidth: '80%', margin: '0 auto' }}
-          >
-            {filteredProjects.map((project, index) => (
-              <Carousel.Item key={project._id} onClick={() => handleShowModal(project, index)}>
-                <div className="cardbody">
-                  <Card className="mb-3 text-white text-center">
-                    <Card.Body>
-                      <Card.Title className="mb-2 text-white text-center">{project.Title}</Card.Title>
-                      {/* Center the Card.Text */}
-                      <Card.Text className="mb-2 text-white text-center">{project.Description}</Card.Text>
-                      <Button variant="primary ">View Details</Button>
-                    </Card.Body>
-                  </Card>
-                </div>
-              </Carousel.Item>
-            ))}
-          </Carousel>
-        )}
-      </div>
-    </Container>
 
+      
+    </Container>
   );
 };
 

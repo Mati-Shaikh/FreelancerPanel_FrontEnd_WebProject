@@ -225,3 +225,16 @@ border-radius: 20px;
     font-size: 2.5em; /* Target font size */
   }
 }
+/* Add these styles to your CSS file or use inline styles */
+.star-icon {
+  animation: spin 2s linear infinite; /* Adjust duration and timing function as needed */
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

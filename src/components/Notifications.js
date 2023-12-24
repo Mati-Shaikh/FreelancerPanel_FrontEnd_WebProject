@@ -36,9 +36,9 @@ const Notifications = () => {
 
   return (
     <div className="notifications-container">
-      <h1 className="notifications-heading">
-        <FontAwesomeIcon icon={faBell} /> Notifications
-      </h1>
+      <div className="heading-container">
+        <div className="animated-heading"><FontAwesomeIcon icon={faBell} /> Notifications</div>
+      </div>
 
       {loading && <p className="text-muted">Loading notifications...</p>}
 

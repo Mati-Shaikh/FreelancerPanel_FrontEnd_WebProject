@@ -50,9 +50,9 @@ const NewProposals = () => {
 
   return (
     <div className="notifications-container">
-      <h1 className="notifications-heading">
-        <FontAwesomeIcon icon={faFileAlt} /> New Proposals
-      </h1>
+      <div className="heading-container">
+        <div className="animated-heading"> <FontAwesomeIcon icon={faFileAlt} /> New Proposals</div>
+      </div>
 
       {loading && <p className="text-muted">Loading new proposals...</p>}
 
