@@ -38,6 +38,35 @@ const PresentProposals = () => {
     fetchProjects();
   }, []);
 
+  const handleDelivered = async (id) => {
+    try {
+      console.log(id)
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:3000/api/Freelancer/ProjectDelivered/${id}`, {
+        method: 'POST', // Assuming you are using a PUT request for updating the project status
+        headers: {
+          token: token,
+        },
+      });
+      const data=response.json();
+      console.log(data);
+      if (response.ok) {
+        // Project approved successfully
+        alert('Project Delivered successfully');
+        
+        // Refresh the list of new proposals (you may want to consider updating state)
+        // For example, you can make another API call here or modify the state directly
+      } else {
+        const data = await response.json();
+        console.error('Failed to Delivered project:', data.message);
+        alert('Failed to Deliver project');
+      }
+    } catch (error) {
+      console.error('Error during project deliver:', error);
+      alert('Error during project deliver');
+    }
+  };
+
   const handleShowModal = (project) => {
     setSelectedProject(project);
     setShowModal(true);
@@ -73,6 +102,7 @@ const PresentProposals = () => {
                   <Badge pill variant="success" className="ml-2 mt-2">
                     Budget: ${project.Budget}
                   </Badge>
+                  <button className="btn btn-primary detail_button" onClick={()=> handleDelivered(project._id)}>Delivered</button>
                   <Button variant="primary" className='detail_button' onClick={() => handleShowModal(project)}>
                     View Details
                   </Button>

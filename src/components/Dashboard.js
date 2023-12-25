@@ -7,9 +7,9 @@ import History from './History'; // Import the component for History
 import PresentProjects from './PresentProject'; // Import the component for Present Projects
 import Reviews from './Reviews'; // Import the component for Reviews
 import Home from './Home'; // Import the component for Reviews
-
+import Profile from './ProfilePopup';
 const Dashboard = () => {
-  const [activeComponent, setActiveComponent] = useState(null);
+  const [activeComponent, setActiveComponent] = useState('Dashboard');
   const [isProfilePopupOpen, setProfilePopupOpen] = useState(false);
 
   const toggleProfilePopup = () => {
@@ -32,7 +32,11 @@ const Dashboard = () => {
       {activeComponent === 'History' && <History />}
       {activeComponent === 'PresentProjects' && <PresentProjects />}
       {activeComponent === 'Reviews' && <Reviews />}
+      {activeComponent === 'Dashboard' && <Profile/>}
       {isProfilePopupOpen && <ProfilePopup onClose={toggleProfilePopup} />}
+
+
+    
     </div>
   );
 };

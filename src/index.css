@@ -239,3 +239,34 @@ border-radius: 20px;
     transform: rotate(360deg);
   }
 }
+.profile-container {
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+
+.profile-container {
+  max-width: 800px;
+  margin: auto;
+  color: white; /* Set text color to white for the container */
+}
+
+.profile-container .card {
+  background-color: #343a40; /* Dark background for cards */
+}
+
+.profile-container .badge {
+  background-color: #6c757d; /* Gray badge */
+  color: white; /* Set badge text color to white */
+}
+
+/* If you have links or other elements that need specific styling */
+.profile-container a {
+  color: #0d6efd; /* Example link color */
+}
+
+

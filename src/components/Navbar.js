@@ -82,12 +82,14 @@ const Navbar = ({ handleNavLinkClick, handleModalToggle }) => {
     localStorage.removeItem('token'); // Remove token from localStorage
     navigate('/login'); // Navigate to the login page
   };
+  const handleLogo = () => {
+    window.location.href = '/Dashboard';
+  };
 
-  // Other functions...
 
   return (
     <nav>
-      <img src={logo} alt="Logo" className="logo" />
+      <img src={logo} alt="Logo" className="logo" onClick={handleLogo} style={{ cursor: 'pointer' }} />
       <div className="links">
       <a href="#" onClick={() => handleNavLinkClick('Home')}>
           <FontAwesomeIcon icon={faHouse} className='logos'/> Home
@@ -118,7 +120,7 @@ const Navbar = ({ handleNavLinkClick, handleModalToggle }) => {
         <Dropdown.Toggle split variant="primary" id="dropdown-split-basic" />
 
         <Dropdown.Menu>
-          <Dropdown.Item onClick={handleModalToggle}>
+          <Dropdown.Item onClick={handleLogo}>
             <FontAwesomeIcon icon={faUser} className='logos_1'/> View
           </Dropdown.Item>
           <Dropdown.Item onClick={() => setShowEditModal(true)}>
