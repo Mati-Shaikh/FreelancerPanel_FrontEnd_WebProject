@@ -11,7 +11,7 @@ const FreelancerProfile = () => {
     Samples: []
   });
   const [showModal, setShowModal] = useState(false);
-
+  const [showDropup, setShowDropup] = useState(false);
   useEffect(() => {
     fetchProfileData();
   }, []);
@@ -58,6 +58,10 @@ const FreelancerProfile = () => {
       console.error('Error adding project:', error);
       alert('Project has not been added due to some reason');
     }
+  };
+  const toggleDropup = () => {
+    console.log("Toggle dropup called"); // Debugging line
+    setShowDropup(!showDropup);
   };
 
   return (
@@ -118,32 +122,33 @@ const FreelancerProfile = () => {
           height: '50px',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          backgroundColor: 'transparent'
         }}
         className="btn btn-primary" 
         onClick={() => setShowModal(true)}
       >
        + 
       </button>
-      <button 
-        style={{
-          position: 'fixed',
-          bottom: '10px',
-          right: '10px',
-          cursor: 'pointer',
-          borderRadius: '50%',
-          width: '50px',
-          height: '50px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginBottom:"60px"
-        }}
-        className="btn btn-primary" 
-        onClick={() => setShowModal(true)}
-      >
-       <FontAwesomeIcon icon={faMoneyBill} style={{backgroundColor:'transparent'}}/>
-      </button>
+       {/* Dropup Button and Menu */}
+       <div style={{ position: 'fixed', bottom: '70px', right: '10px' }}>
+        <button 
+          className="btn btn-primary" 
+          type="button" 
+          onClick={() => setShowDropup(!showDropup)}
+          style={{ borderRadius: '50%', width: '50px', height: '50px' ,backgroundColor:"transparent"}}
+        >
+          <FontAwesomeIcon icon={faMoneyBill} />
+        </button>
+        {showDropup && (
+          <div 
+            className="dropdown-menu show" 
+            style={{ position: 'absolute', bottom: '50px', right: '0' }}
+          >
+            <span className="dropdown-item text-center">Account Balance: ${profileData.AccountBalance}</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

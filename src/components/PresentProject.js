@@ -4,7 +4,7 @@ import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBusinessTime } from '@fortawesome/free-solid-svg-icons';
+import { faBusinessTime, faMessage } from '@fortawesome/free-solid-svg-icons';
 
 const PresentProposals = () => {
   const [projects, setProjects] = useState([]);
@@ -91,8 +91,21 @@ const PresentProposals = () => {
         <div className='present-proposal'>
           {projects.map((project) => (
             <div key={project._id} className='cardbody'>
+              
               <Card className="mb-3">
                 <Card.Body>
+                <FontAwesomeIcon 
+  icon={faMessage} 
+  style={{
+    position: 'absolute', 
+    top: 20, 
+    right: 20,
+    backgroundColor: "transparent",
+    color: "white",
+    cursor:"pointer"
+  }}
+/>
+
                   <Card.Title className="mt-2 text-white">{project.Title}</Card.Title>
                   <Card.Subtitle className="mb-2 text-white">{project.Username}</Card.Subtitle>
                   <Card.Text className="mt-2 text-white">{project.Description}</Card.Text>
@@ -106,6 +119,10 @@ const PresentProposals = () => {
                   <Button variant="primary" className='detail_button' onClick={() => handleShowModal(project)}>
                     View Details
                   </Button>
+                  
+                  
+                 
+
                 </Card.Body>
               </Card>
             </div>
