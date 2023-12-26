@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AddProjectModal from './SampleProject';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faMoneyBill } from '@fortawesome/free-solid-svg-icons';
+import { faMoneyBill, faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 const FreelancerProfile = () => {
   const [profileData, setProfileData] = useState({
@@ -91,11 +91,27 @@ const FreelancerProfile = () => {
           <div key={sample._id} className="card my-3 text-white " style={{ borderColor: 'white' }}>
             <div className="card-body text-center">
               <h5 className="card-title">{sample.Title}</h5>
+              <FontAwesomeIcon icon={faTrash} style={{
+                position: 'absolute',
+                top: 20,
+                right: 20,
+                backgroundColor: "transparent",
+                color: "white",
+                cursor: "pointer"
+              }} onClick={{}}/>
+              <FontAwesomeIcon icon={faPenToSquare} style={{
+                position: 'absolute',
+                top: 60,
+                right: 20,
+                backgroundColor: "transparent",
+                color: "white",
+                cursor: "pointer"
+              }} onClick={()=>{}} />
               <p className="card-text">{sample.Description}</p>
               <p>Technologies: {sample.Technologies.join(', ')}</p>
               <div className="d-flex flex-wrap">
                 {sample.ImageUrl && sample.ImageUrl.map((url, index) => (
-                  <img key={index} src={url} className="rounded-circle img-fluid m-2" style={{ width: '100px', height: '100px' ,backgroundColor:'white'}} />
+                  <img key={index} src={url} className="rounded-circle img-fluid m-2" style={{ width: '100px', height: '100px', backgroundColor: 'white' }} />
                 ))}
               </div>
             </div>
@@ -104,14 +120,14 @@ const FreelancerProfile = () => {
       </div>
 
       {/* Modal for Adding Project */}
-      <AddProjectModal 
+      <AddProjectModal
         isOpen={showModal}
-        onClose={() => setShowModal(false)} 
-        onSave={handleAddProject} 
+        onClose={() => setShowModal(false)}
+        onSave={handleAddProject}
       />
-      
+
       {/* Add Project Button */}
-      <button 
+      <button
         style={{
           position: 'fixed',
           bottom: '10px',
@@ -125,24 +141,24 @@ const FreelancerProfile = () => {
           justifyContent: 'center',
           backgroundColor: 'transparent'
         }}
-        className="btn btn-primary" 
+        className="btn btn-primary"
         onClick={() => setShowModal(true)}
       >
-       + 
+        +
       </button>
-       {/* Dropup Button and Menu */}
-       <div style={{ position: 'fixed', bottom: '70px', right: '10px' }}>
-        <button 
-          className="btn btn-primary" 
-          type="button" 
+      {/* Dropup Button and Menu */}
+      <div style={{ position: 'fixed', bottom: '70px', right: '10px' }}>
+        <button
+          className="btn btn-primary"
+          type="button"
           onClick={() => setShowDropup(!showDropup)}
-          style={{ borderRadius: '50%', width: '50px', height: '50px' ,backgroundColor:"transparent"}}
+          style={{ borderRadius: '50%', width: '50px', height: '50px', backgroundColor: "transparent" }}
         >
           <FontAwesomeIcon icon={faMoneyBill} />
         </button>
         {showDropup && (
-          <div 
-            className="dropdown-menu show" 
+          <div
+            className="dropdown-menu show"
             style={{ position: 'absolute', bottom: '50px', right: '0' }}
           >
             <span className="dropdown-item text-center">Account Balance: ${profileData.AccountBalance}</span>

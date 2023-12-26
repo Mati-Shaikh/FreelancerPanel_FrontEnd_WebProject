@@ -105,7 +105,7 @@ const NewProposals = () => {
         <div className="animated-heading"> <FontAwesomeIcon icon={faFileAlt} /> New Proposals</div>
       </div>
 
-      {loading && <p className="text-muted">Loading new proposals...</p>}
+      {loading && <p className="text-muted text-white">Loading new proposals...</p>}
 
       {!loading && projects.length === 0 && <p className="text-muted">No new proposals available.</p>}
 
