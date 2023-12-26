@@ -54,9 +54,7 @@ const PresentProposals = () => {
         // Project approved successfully
         alert('Project Delivered successfully');
         
-        // Refresh the list of new proposals (you may want to consider updating state)
-        // For example, you can make another API call here or modify the state directly
-      } else {
+          } else {
         const data = await response.json();
         console.error('Failed to Delivered project:', data.message);
         alert('Failed to Deliver project');

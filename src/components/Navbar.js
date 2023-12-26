@@ -10,7 +10,7 @@ import { faPowerOff, faUserPen, faTrash } from '@fortawesome/free-solid-svg-icon
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
-const Navbar = ({ handleNavLinkClick, handleModalToggle }) => {
+const Navbar = ({ handleNavLinkClick }) => {
   const navigate = useNavigate();
   const [showEditModal, setShowEditModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -80,7 +80,7 @@ const Navbar = ({ handleNavLinkClick, handleModalToggle }) => {
 
   const handleLogout = () => {
     localStorage.removeItem('token'); // Remove token from localStorage
-    navigate('/login'); // Navigate to the login page
+    window.location.href = '/';
   };
   const handleLogo = () => {
     window.location.href = '/Dashboard';

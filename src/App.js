@@ -1,21 +1,35 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
-import History from './components/History'
+import History from './components/History';
 
 const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check for token in localStorage
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   const handleLoginSuccess = () => {
-    // Implement your logic for handling login success
-    console.log('Login successful! Redirecting to dashboard...');
-    // Add your logic to redirect the user or perform other actions
+    console.log('Login successful!');
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    console.log('Logout successful!');
+    localStorage.removeItem('token'); // Remove token from localStorage
+    setIsLoggedIn(false);
   };
 
   const handleSignUpSuccess = () => {
-    // Implement your logic for handling sign-up success
-    console.log('Sign-up successful! Redirecting to login...');
-    // You can add logic to redirect the user or perform other actions
+    console.log('Sign-up successful!');
+    // Handle sign-up success logic here
   };
 
   return (
@@ -24,14 +38,17 @@ const App = () => {
         <Route path="/signup" element={<SignUp onSignUpSuccess={handleSignUpSuccess} />} />
         <Route
           path="/"
-          element={<Login onLoginSuccess={handleLoginSuccess} />}
+          element={!isLoggedIn ? <Login onLoginSuccess={handleLoginSuccess} /> : <Navigate to="/dashboard" />}
         />
         <Route
-          path="/Dashboard"
-          element={<Dashboard/>} />
+          path="/dashboard"
+          element={isLoggedIn ? <Dashboard onLogout={handleLogout} /> : <Navigate to="/" />}
+        />
         <Route
-          path="/History"
-          element={<History/>} />
+          path="/history"
+          element={isLoggedIn ? <History /> : <Navigate to="/" />}
+        />
+        {/* Other routes as needed */}
       </Routes>
     </Router>
   );
