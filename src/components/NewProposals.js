@@ -40,29 +40,25 @@ const NewProposals = () => {
 
   const handleReject = async (id) => {
     try {
-      console.log(id)
       const token = localStorage.getItem('token');
       const response = await fetch(`http://localhost:3000/api/Freelancer/ProjectReject/${id}`, {
-        method: 'POST', // Assuming you are using a PUT request for updating the project status
+        method: 'POST',
         headers: {
           token: token,
         },
       });
-      const data=response.json();
-      console.log(data);
+  
       if (response.ok) {
-        // Project approved successfully
         alert('Project Rejected successfully');
-        
-        // Refresh the list of new proposals (you may want to consider updating state)
-        // For example, you can make another API call here or modify the state directly
+  
+        // Remove the project from the list
+        setProjects(prevProjects => prevProjects.filter(project => project._id !== id));
       } else {
-        const data = await response.json();
-        console.error('Failed to approve project:', data.message);
+        console.error('Failed to reject project');
         alert('Failed to Reject project');
       }
     } catch (error) {
-      console.error('Error during project approval:', error);
+      console.error('Error during project rejection:', error);
       alert('Error during project reject');
     }
   };
@@ -71,25 +67,21 @@ const NewProposals = () => {
 
   const handleApproval = async (id) => {
     try {
-      console.log(id)
       const token = localStorage.getItem('token');
       const response = await fetch(`http://localhost:3000/api/Freelancer/ProjectApproved/${id}`, {
-        method: 'POST', // Assuming you are using a PUT request for updating the project status
+        method: 'POST',
         headers: {
           token: token,
         },
       });
-      const data=response.json();
-      console.log(data);
+  
       if (response.ok) {
-        // Project approved successfully
         alert('Project Approved successfully');
-        
-        // Refresh the list of new proposals (you may want to consider updating state)
-        // For example, you can make another API call here or modify the state directly
+  
+        // Remove the project from the list
+        setProjects(prevProjects => prevProjects.filter(project => project._id !== id));
       } else {
-        const data = await response.json();
-        console.error('Failed to approve project:', data.message);
+        console.error('Failed to approve project');
         alert('Failed to approve project');
       }
     } catch (error) {

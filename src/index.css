@@ -150,9 +150,6 @@ button:hover {
 .iconProfile:hover{
   cursor: pointer;
 }
-/* .notifications-container,.payment-history-container{
-  background-color: black;
-} */
 .notifications-heading,.history-heading,.present-proposals-heading{
 /* background-color:#000; */
 color: aliceblue;
@@ -270,3 +267,46 @@ border-radius: 20px;
 }
 
 
+/* Responsive styles for mobile devices */
+@media (max-width: 375px) {
+  .logo {
+    width: 40px; /* Adjust logo size for smaller screens */
+  }
+
+  .links {
+    flex-direction: column; /* Stack the links vertically */
+    align-items: center; /* Align links to center */
+    gap: 5px; /* Reduce gap between links */
+  }
+
+  .links a {
+    font-size: 14px; /* Reduce font size for links */
+    padding: 5px; /* Adjust padding */
+  }
+
+  .dropdown {
+    font-size: 14px; /* Adjust font size for dropdown */
+  }
+
+  .dropdown-menu {
+    font-size: 14px; /* Adjust font size for dropdown menu */
+  }
+}
+
+/* Additional responsive adjustments as needed */
+@media (min-width: 376px) and (max-width: 768px) {
+  /* Adjustments for tablets or larger mobile devices */
+  .logo {
+    width: 45px; /* Slightly larger logo for larger screens */
+  }
+
+  .links {
+    flex-direction: row; /* Keep links horizontal */
+    gap: 15px; /* Increase gap between links */
+  }
+
+  .links a {
+    font-size: 16px; /* Increase font size for links */
+    padding: 8px; /* Increase padding */
+  }
+}

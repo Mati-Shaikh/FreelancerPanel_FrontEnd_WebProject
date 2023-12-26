@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBusinessTime, faMessage } from '@fortawesome/free-solid-svg-icons';
 
 const PresentProposals = () => {
+  const [showMessageModal, setShowMessageModal] = useState(false);
+const [selectedProjectForMessage, setSelectedProjectForMessage] = useState(null);
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -40,30 +42,29 @@ const PresentProposals = () => {
 
   const handleDelivered = async (id) => {
     try {
-      console.log(id)
       const token = localStorage.getItem('token');
       const response = await fetch(`http://localhost:3000/api/Freelancer/ProjectDelivered/${id}`, {
-        method: 'POST', // Assuming you are using a PUT request for updating the project status
+        method: 'POST',
         headers: {
           token: token,
         },
       });
-      const data=response.json();
-      console.log(data);
+  
       if (response.ok) {
-        // Project approved successfully
         alert('Project Delivered successfully');
-        
-          } else {
-        const data = await response.json();
-        console.error('Failed to Delivered project:', data.message);
+  
+        // Remove the project from the list
+        setProjects(prevProjects => prevProjects.filter(project => project._id !== id));
+      } else {
+        console.error('Failed to Deliver project');
         alert('Failed to Deliver project');
       }
     } catch (error) {
-      console.error('Error during project deliver:', error);
-      alert('Error during project deliver');
+      console.error('Error during project delivery:', error);
+      alert('Error during project delivery');
     }
   };
+  
 
   const handleShowModal = (project) => {
     setSelectedProject(project);
@@ -74,6 +75,20 @@ const PresentProposals = () => {
     setSelectedProject(null);
     setShowModal(false);
   };
+
+  const handleMessageIconClick = (project) => {
+    setSelectedProjectForMessage(project);
+    setShowMessageModal(true);
+  };
+  const handleSendMessage = () => {
+    // Logic to send message
+    console.log('Sending message...');
+  
+    // Close the modal after sending the message
+    setShowMessageModal(false);
+  };
+  
+   
 
   return (
     <div className="present-proposals-container">
@@ -92,7 +107,8 @@ const PresentProposals = () => {
               
               <Card className="mb-3">
                 <Card.Body>
-                <FontAwesomeIcon 
+    
+<FontAwesomeIcon 
   icon={faMessage} 
   style={{
     position: 'absolute', 
@@ -102,7 +118,10 @@ const PresentProposals = () => {
     color: "white",
     cursor:"pointer"
   }}
+  onClick={() => handleMessageIconClick(project)}
+  cursor="pointer"
 />
+
 
                   <Card.Title className="mt-2 text-white">{project.Title}</Card.Title>
                   <Card.Subtitle className="mb-2 text-white">{project.Username}</Card.Subtitle>
@@ -152,6 +171,32 @@ const PresentProposals = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+      {/* Message Modal */}
+      <Modal show={showMessageModal} onHide={() => setShowMessageModal(false)}>
+    <Modal.Header closeButton>
+        <Modal.Title className='text-white'>
+            Send Message to {selectedProjectForMessage?.Username}
+        </Modal.Title>
+    </Modal.Header>
+    
+  <Modal.Body>
+    <form>
+      <div className="form-group text-white">
+        <label htmlFor="messageText">Message</label>
+        <textarea className="form-control" id="messageText" rows="3"></textarea>
+      </div>
+    </form>
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="secondary" onClick={() => setShowMessageModal(false)}>
+      Close
+    </Button>
+    <Button variant="primary" onClick={handleSendMessage}>
+      Send
+    </Button>
+  </Modal.Footer>
+</Modal>
+
     </div>
   );
 };

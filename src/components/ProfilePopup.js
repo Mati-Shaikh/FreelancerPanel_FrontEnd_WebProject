@@ -95,7 +95,7 @@ const FreelancerProfile = () => {
               <p>Technologies: {sample.Technologies.join(', ')}</p>
               <div className="d-flex flex-wrap">
                 {sample.ImageUrl && sample.ImageUrl.map((url, index) => (
-                  <img key={index} src={url} className="rounded-circle img-fluid m-2" style={{ width: '100px', height: '100px' ,backgroundColor:'grey'}} />
+                  <img key={index} src={url} className="rounded-circle img-fluid m-2" style={{ width: '100px', height: '100px' ,backgroundColor:'white'}} />
                 ))}
               </div>
             </div>
