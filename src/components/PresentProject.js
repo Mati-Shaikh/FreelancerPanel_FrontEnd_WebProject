@@ -13,6 +13,8 @@ const [selectedProjectForMessage, setSelectedProjectForMessage] = useState(null)
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [messageText, setMessageText] = useState('');
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -76,18 +78,83 @@ const [selectedProjectForMessage, setSelectedProjectForMessage] = useState(null)
     setShowModal(false);
   };
 
-  const handleMessageIconClick = (project) => {
+
+  const fetchMessages = async (projectId) => {
+    try {
+      console.log("Fum"+projectId)
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:3000/api/Freelancer/getMessage/${projectId}`, {
+        method: 'GET', 
+      headers: {
+          'Content-Type': 'application/json',
+          token: token,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data)
+        setMessages(data.messages); // Assuming the response has a messages array
+      } else {
+        console.error('Failed to fetch messages:', response.status);
+        setMessages([]); // Reset messages if the fetch fails
+      }
+    } catch (error) {
+      console.error('Error during messages fetch:', error);
+      setMessages([]);
+    }
+  };
+
+  const handleMessageIconClick = async (project) => {
     setSelectedProjectForMessage(project);
     setShowMessageModal(true);
+    await fetchMessages(project._id);
   };
-  const handleSendMessage = () => {
-    // Logic to send message
-    console.log('Sending message...');
-  
-    // Close the modal after sending the message
-    setShowMessageModal(false);
-  };
-  
+  const handleSendMessage = async () => {
+    if (!selectedProjectForMessage || !messageText.trim()) {
+      alert('Please enter a message.');
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('token');
+      console.log(selectedProjectForMessage._id);
+      const response = await fetch(`http://localhost:3000/api/Freelancer/sendmessage/${selectedProjectForMessage._id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          token: token,
+        },
+        body: JSON.stringify({ message: messageText }),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+
+        // Check if responseData is an array
+        if (Array.isArray(responseData)) {
+          setMessages(responseData);  // Assuming setMessages updates the state
+        } else {
+          // If it's not an array, handle it accordingly
+          console.log("Received data is not an array", responseData);
+          // Here you might want to handle non-array responses, depending on your use case
+        }
+
+        alert('Message sent successfully');
+      } else {
+        // Handle HTTP error responses
+        alert('Failed to send message');
+      }
+    } catch (error) {
+      // Handle errors in sending the message or in the response
+      console.error('Error during sending message:', error);
+      alert('Error during sending message');
+    } finally {
+      // Reset message input and close modal (or any cleanup) after sending message
+      setMessageText('');
+      setShowMessageModal(false);
+    }
+};
    
 
   return (
@@ -171,31 +238,47 @@ const [selectedProjectForMessage, setSelectedProjectForMessage] = useState(null)
           </Button>
         </Modal.Footer>
       </Modal>
-      {/* Message Modal */}
-      <Modal show={showMessageModal} onHide={() => setShowMessageModal(false)}>
-    <Modal.Header closeButton>
-        <Modal.Title className='text-white'>
+       {/* Message Modal */}
+       <Modal show={showMessageModal} onHide={() => setShowMessageModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title className='text-white'>
             Send Message to {selectedProjectForMessage?.Username}
-        </Modal.Title>
-    </Modal.Header>
-    
-  <Modal.Body>
-    <form>
-      <div className="form-group text-white">
-        <label htmlFor="messageText">Message</label>
-        <textarea className="form-control" id="messageText" rows="3"></textarea>
-      </div>
-    </form>
-  </Modal.Body>
-  <Modal.Footer>
-    <Button variant="secondary" onClick={() => setShowMessageModal(false)}>
-      Close
-    </Button>
-    <Button variant="primary" onClick={handleSendMessage}>
-      Send
-    </Button>
-  </Modal.Footer>
-</Modal>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form>
+            <div className="form-group text-white">
+              <label htmlFor="messageText">Message</label>
+              <textarea 
+                className="form-control" 
+                id="messageText" 
+                rows="3"
+                value={messageText}
+                onChange={(e) => setMessageText(e.target.value)}
+              ></textarea>
+            </div>
+          </form>
+          {/* Render existing messages */}
+          <div className="existing-messages">
+            {messages && messages.map((msg, index) => (
+              <div key={index} className="message text-white">
+                <strong>{msg.senderName}:</strong> {msg.message}
+                <div className="text-muted text-white">
+                  <small>{new Date(msg.createdAt).toLocaleString()}</small>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowMessageModal(false)}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSendMessage}>
+            Send
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
     </div>
   );
