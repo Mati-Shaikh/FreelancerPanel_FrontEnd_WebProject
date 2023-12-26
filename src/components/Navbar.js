@@ -91,24 +91,27 @@ const Navbar = ({ handleNavLinkClick }) => {
     <nav>
       <img src={logo} alt="Logo" className="logo" onClick={handleLogo} style={{ cursor: 'pointer' }} />
       <div className="links">
-      <a href="#" onClick={() => handleNavLinkClick('Home')}>
+      {/* <a href="#" onClick={() => handleNavLinkClick('Home')}>
           <FontAwesomeIcon icon={faHouse} className='logos'/> Home
-        </a>
-        <a href="#" onClick={() => handleNavLinkClick('Notifications')}>
+        </a> */}
+        <Link to="/home">
+    <FontAwesomeIcon icon={faHouse} className='logos'/> Home
+  </Link>
+        <Link to = '/Notifications'>
           <FontAwesomeIcon icon={faBell} className='logos'/> Notifications
-        </a>
-        <a href="#" onClick={() => handleNavLinkClick('NewProposals')}>
+        </Link>
+        <Link to = '/NewProposals'>
         <FontAwesomeIcon icon={faFileAlt} className='logos'/> New Proposals
-        </a>
-        <a href="#" onClick={() => handleNavLinkClick('History')}>
+        </Link>
+        <Link to = '/History'>
         <FontAwesomeIcon icon={faCreditCard} className='logos'/> PaymentHistory
-        </a>
-        <a href="#" onClick={() => handleNavLinkClick('PresentProjects')}>
+        </Link>
+        <Link to = '/PresentProposals'>
           <FontAwesomeIcon icon={faBusinessTime} className='logos'/> Present Projects
-        </a>
-        <a href="#" onClick={() => handleNavLinkClick('Reviews')}>
+        </Link>
+        <Link to = '/Reviews'>
           <FontAwesomeIcon icon={faStar} className='logos'/> Reviews
-        </a>
+        </Link>
       </div>
 
       {/* Using Bootstrap SplitButton */}

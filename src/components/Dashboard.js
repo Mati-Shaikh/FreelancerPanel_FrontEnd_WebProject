@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import ProfilePopup from './ProfilePopup';
 import Notifications from './Notifications'; // Import the component for Notifications
@@ -22,10 +23,13 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Navbar
+      {/* <Navbar
         toggleProfilePopup={toggleProfilePopup}
         handleNavLinkClick={handleNavLinkClick}
-      />
+      /> */}
+        {/* <Routes>
+        <Route path="/home" element={<Home />} />
+        </Routes> */}
       {activeComponent === 'Home' && <Home />}
       {activeComponent === 'Notifications' && <Notifications />}
       {activeComponent === 'NewProposals' && <NewProposals />}
