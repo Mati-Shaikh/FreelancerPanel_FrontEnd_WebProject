@@ -8,7 +8,7 @@ import { faBusinessTime, faMessage } from '@fortawesome/free-solid-svg-icons';
 
 const PresentProposals = () => {
   const [showMessageModal, setShowMessageModal] = useState(false);
-const [selectedProjectForMessage, setSelectedProjectForMessage] = useState(null);
+  const [selectedProjectForMessage, setSelectedProjectForMessage] = useState(null);
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -110,7 +110,7 @@ const [selectedProjectForMessage, setSelectedProjectForMessage] = useState(null)
     setShowMessageModal(true);
     await fetchMessages(project._id);
   };
-  const handleSendMessage = async () => {
+  const handleSendMessage = async (id) => {
     if (!selectedProjectForMessage || !messageText.trim()) {
       alert('Please enter a message.');
       return;
@@ -118,8 +118,8 @@ const [selectedProjectForMessage, setSelectedProjectForMessage] = useState(null)
 
     try {
       const token = localStorage.getItem('token');
-      console.log(selectedProjectForMessage._id);
-      const response = await fetch(`http://localhost:3000/api/Freelancer/sendmessage/${selectedProjectForMessage._id}`, {
+      console.log(id);
+      const response = await fetch(`http://localhost:3000/api/Freelancer/sendmessage/${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -228,6 +228,7 @@ const [selectedProjectForMessage, setSelectedProjectForMessage] = useState(null)
               <p>Description: {selectedProject.Description}</p>
               <p>Deadline: {selectedProject.Deadline}</p>
               <p>Budget: ${selectedProject.Budget}</p>
+              <p>Budget: ${selectedProject.UserId}</p>
               {/* Add more details as needed */}
             </>
           )}
@@ -274,7 +275,7 @@ const [selectedProjectForMessage, setSelectedProjectForMessage] = useState(null)
           <Button variant="secondary" onClick={() => setShowMessageModal(false)}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSendMessage}>
+          <Button variant="primary" onClick={()=>handleSendMessage(selectedProjectForMessage?.UserId)}>
             Send
           </Button>
         </Modal.Footer>

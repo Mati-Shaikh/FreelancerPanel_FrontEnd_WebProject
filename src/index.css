@@ -291,22 +291,42 @@ border-radius: 20px;
   .dropdown-menu {
     font-size: 14px; /* Adjust font size for dropdown menu */
   }
+  .notify,.present-proposal,.proposals_container,.reviews-container{
+    margin-top: 20px; 
+   color: white;
+  width: 21rem;
+  margin-left: 1rem;
+  }
 }
 
 /* Additional responsive adjustments as needed */
-@media (min-width: 376px) and (max-width: 768px) {
-  /* Adjustments for tablets or larger mobile devices */
+@media (min-width: 375px) and (max-width: 840px) {
   .logo {
-    width: 45px; /* Slightly larger logo for larger screens */
+    width: 40px; /* Adjust logo size for smaller screens */
   }
 
   .links {
-    flex-direction: row; /* Keep links horizontal */
-    gap: 15px; /* Increase gap between links */
+    flex-direction: column; /* Stack the links vertically */
+    align-items: center; /* Align links to center */
+    gap: 5px; /* Reduce gap between links */
   }
 
   .links a {
-    font-size: 16px; /* Increase font size for links */
-    padding: 8px; /* Increase padding */
+    font-size: 14px; /* Reduce font size for links */
+    padding: 5px; /* Adjust padding */
+  }
+
+  .dropdown {
+    font-size: 14px; /* Adjust font size for dropdown */
+  }
+
+  .dropdown-menu {
+    font-size: 14px; /* Adjust font size for dropdown menu */
+  }
+  .notify,.present-proposal,.proposals_container,.reviews-container{
+    margin-top: 20px; 
+   color: white;
+  width: 38rem;
+  margin-left: 1rem;
   }
 }

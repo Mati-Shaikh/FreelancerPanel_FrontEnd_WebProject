@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AddProjectModal from './SampleProject';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMoneyBill, faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faMoneyBill, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const FreelancerProfile = () => {
   const [profileData, setProfileData] = useState({
@@ -64,6 +64,28 @@ const FreelancerProfile = () => {
     setShowDropup(!showDropup);
   };
 
+  const handleDeleteProject = async (projectid) => {
+    try {
+      console.log(projectid)
+      const response = await fetch(`http://localhost:3000/api/Freelancer/deleteProject/${projectid}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          token: localStorage.getItem('token'),
+        },
+      });
+
+      if (response.ok) {
+        alert('Your Sample Project has been deleted.');
+      } else {
+        const data = await response.json();
+        alert(`Failed to delete project: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Error during account deletion:', error);
+    }
+  };
+
   return (
     <div className="container profile-container my-5">
       {/* Profile Info */}
@@ -98,15 +120,7 @@ const FreelancerProfile = () => {
                 backgroundColor: "transparent",
                 color: "white",
                 cursor: "pointer"
-              }} onClick={{}}/>
-              <FontAwesomeIcon icon={faPenToSquare} style={{
-                position: 'absolute',
-                top: 60,
-                right: 20,
-                backgroundColor: "transparent",
-                color: "white",
-                cursor: "pointer"
-              }} onClick={()=>{}} />
+              }} onClick={()=>{handleDeleteProject(sample._id)}}/>
               <p className="card-text">{sample.Description}</p>
               <p>Technologies: {sample.Technologies.join(', ')}</p>
               <div className="d-flex flex-wrap">

@@ -91,9 +91,6 @@ const Navbar = ({ handleNavLinkClick }) => {
     <nav>
       <img src={logo} alt="Logo" className="logo" onClick={handleLogo} style={{ cursor: 'pointer' }} />
       <div className="links">
-      {/* <a href="#" onClick={() => handleNavLinkClick('Home')}>
-          <FontAwesomeIcon icon={faHouse} className='logos'/> Home
-        </a> */}
         <Link to="/home">
     <FontAwesomeIcon icon={faHouse} className='logos'/> Home
   </Link>
