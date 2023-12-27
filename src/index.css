@@ -19,6 +19,7 @@ body {
 background-color:#3533CD ;
   max-width: 400px;
   margin: auto;
+  margin-top:80px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -253,11 +254,11 @@ border-radius: 20px;
 }
 
 .profile-container .card {
-  background-color: #343a40; /* Dark background for cards */
+  background-color: #3533CD; /* Dark background for cards */
 }
 
 .profile-container .badge {
-  background-color: #6c757d; /* Gray badge */
+  background-color: #3533CD; /* Gray badge */
   color: white; /* Set badge text color to white */
 }
 

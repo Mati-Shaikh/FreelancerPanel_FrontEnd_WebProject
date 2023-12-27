@@ -229,7 +229,7 @@ const PresentProposals = () => {
               <p>Deadline: {selectedProject.Deadline}</p>
               <p>Budget: ${selectedProject.Budget}</p>
               <p>Budget: ${selectedProject.UserId}</p>
-              {/* Add more details as needed */}
+              
             </>
           )}
         </Modal.Body>
@@ -248,7 +248,7 @@ const PresentProposals = () => {
         </Modal.Header>
         <Modal.Body>
           <form>
-            <div className="form-group text-white">
+            <div className="form-group text-white" style={{backgroundColor:'#151452'}}>
               <label htmlFor="messageText">Message</label>
               <textarea 
                 className="form-control" 
@@ -260,7 +260,7 @@ const PresentProposals = () => {
             </div>
           </form>
           {/* Render existing messages */}
-          <div className="existing-messages">
+          <div className="existing-messages" style={{backgroundColor:"#000"}}>
             {messages && messages.map((msg, index) => (
               <div key={index} className="message text-white">
                 <strong>{msg.senderName}:</strong> {msg.message}

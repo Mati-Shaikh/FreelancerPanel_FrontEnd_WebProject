@@ -40,7 +40,7 @@ const SignUp = ({ onSignUpSuccess }) => {
       if (response.ok) {
         setErrorMessage(data.message || 'Signup Success');
         onSignUpSuccess();
-        navigate('/login'); // Navigate back to the login page after successful signup
+        navigate('/'); // Navigate back to the login page after successful signup
       } else {
         console.error('Signup failed:', data.message);
         setErrorMessage(data.message || 'Signup failed. Please try again.');
